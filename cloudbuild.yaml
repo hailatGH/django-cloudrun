@@ -73,8 +73,8 @@ steps:
       - cicd
       - '--platform=managed'
       - '--image=us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
-      - >-
-        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=myimagev1,gcb-build-id=hailat-build-id,gcb-trigger-id=hailat-trigger,gcb-trigger-idhailat-trigger
+      # - >-
+      #   --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=myimagev1,gcb-build-id=hailat-build-id,gcb-trigger-id=hailat-trigger,gcb-trigger-idhailat-trigger
       - '--region=europe-west1'
       - '--quiet'
     id: Deploy
