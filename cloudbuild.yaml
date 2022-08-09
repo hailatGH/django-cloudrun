@@ -5,7 +5,7 @@ steps:
       - build
       - '--no-cache'
       - '-t'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
       - .
       - '-f'
       - Dockerfile
@@ -15,18 +15,18 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
     id: Push
 
   # 2. Make migrations
   - name: gcr.io/google-appengine/exec-wrapper
     args:
       - '-i'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
       - '-s'
-      - '${PROJECT_ID}:${_DEPLOY_REGION}:${_DB_INSTANCE}'
+      - 'kin-project-352614:europe-west1:django-dev-db'
       - '-e'
-      - 'SETTINGS_NAME=${_SECRET_SETTINGS_NAME}'
+      - 'SETTINGS_NAME=django_app_settings'
       - '--'
       - 'python'
       - 'manage.py'
@@ -37,11 +37,11 @@ steps:
   - name: gcr.io/google-appengine/exec-wrapper
     args:
       - '-i'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
       - '-s'
-      - '${PROJECT_ID}:${_DEPLOY_REGION}:${_DB_INSTANCE}'
+      - 'kin-project-352614:europe-west1:django-dev-db'
       - '-e'
-      - 'SETTINGS_NAME=${_SECRET_SETTINGS_NAME}'
+      - 'SETTINGS_NAME=django_app_settings'
       - '--'
       - 'python'
       - 'manage.py'
@@ -52,11 +52,11 @@ steps:
   - name: gcr.io/google-appengine/exec-wrapper
     args:
       - '-i'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
       - '-s'
-      - '${PROJECT_ID}:${_DEPLOY_REGION}:${_DB_INSTANCE}'
+      - 'kin-project-352614:europe-west1:django-dev-db'
       - '-e'
-      - 'SETTINGS_NAME=${_SECRET_SETTINGS_NAME}'
+      - 'SETTINGS_NAME=django_app_settings'
       - '--'
       - 'python'
       - 'manage.py'
@@ -70,19 +70,19 @@ steps:
       - run
       - services
       - update
-      - $_SERVICE_NAME
+      - cicd
       - '--platform=managed'
-      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '--image=us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
       - >-
-        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
-      - '--region=$_DEPLOY_REGION'
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=myimagev1,gcb-build-id=hailat_build_id,gcb-trigger-id=hailat_trigger,gcp-trigger-id-hailat_trigger
+      - '--region=europe-west1'
       - '--quiet'
     id: Deploy
     entrypoint: gcloud
 
 # Store images in Google Artifact Registry
 images:
-  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+  - 'us.gcr.io/kin-project-352614/django-cloudrun/cicd:myimagev1'
 
 tags:
   - gcp-cloud-build-deploy-cloud-run
