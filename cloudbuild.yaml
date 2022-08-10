@@ -87,3 +87,6 @@ images:
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
+
+options:
+  logging: CLOUD_LOGGING_ONLY
