@@ -23,5 +23,5 @@ services:
       - ./creds.json:/secrets/cloudsql/creds.json
     ports:
       - 127.0.0.1:5432:5432
-    command: /cloud_sql_proxy -instances="kin-project-352614:europe-west1:django-dev-db"=tcp:0.0.0.0:5432 -credential_file=/secrets/cloudsql/creds.json
+    command: /cloud_sql_proxy -instances="kin-project-352614:europe-west1:kin-project-postgresql-v2"=tcp:0.0.0.0:5432 -credential_file=/secrets/cloudsql/creds.json
     restart: always
