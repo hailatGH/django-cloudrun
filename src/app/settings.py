@@ -9,7 +9,7 @@ from google.cloud import secretmanager
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = False
+DEBUG = True
 
 env = environ.Env(
     SECRET_KEY=(str, os.getenv("SECRET_KEY")),
@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages"
+    "storages",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
